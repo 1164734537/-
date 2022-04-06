@@ -3,7 +3,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        main: {
+          nav:'#303133'
+        }
+      }
+    },
   },
   plugins: [],
 }
