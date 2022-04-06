@@ -1,8 +1,5 @@
 <template>
-  <div 
-    class="wrap"
-    :class="isCollapse === true ? 'md:pl-16' : 'md:pl-48'"
-  >
+  <div class="wrap" :class="isCollapse === true ? 'md:pl-16' : 'md:pl-48'">
     <div
       class="
         nav
@@ -16,14 +13,28 @@
         bg-gradient-to-r
         from-green-400
         to-blue-500
+        transition-all
+        duration-1000
       "
       :class="isCollapse === true ? 'md:left-16' : 'md:left-48'"
     >
-    <el-button type="primary" @click="handleCollapse">收起</el-button>
+      <el-icon @click="handleCollapse" class="ml-4 h-20"><fold /></el-icon>
     </div>
-    <div 
-        class="menu hidden fixed top-0 left-0 md:block h-screen bg-white"
-        :class="isCollapse === true ? 'w-16' : 'w-48'"
+    <div
+      class="
+        menu
+        hidden
+        fixed
+        top-0
+        left-0
+        md:block
+        h-screen
+        bg-white
+        transition-all
+        duration-1000
+        overflow-hidden
+      "
+      :class="isCollapse === true ? 'w-16' : 'w-48'"
     >
       <el-row class="mt-4 w-full">
         <el-col>
@@ -32,22 +43,35 @@
               class="w-28 rounded-sm"
               src="@/assets/images/logo.jpg"
               alt=""
+              :class="
+                isCollapse === true
+                  ? 'animate__animated animate__jello'
+                  : 'animate__animated animate__wobble'
+              "
             />
-            <h1 
-                class="font-bold text-xl"
-                v-if="!isCollapse"
-            >陈叔叔导航</h1>
+            <!-- v-if="!isCollapse" -->
+            <h1
+              class="font-bold text-xl"
+              :class="
+                isCollapse === true
+                  ? 'animate__animated animate__fadeOutLeftBig'
+                  : 'animate__animated animate__rubberBand'
+              "
+            >
+              陈叔叔导航
+            </h1>
           </div>
-          <el-menu 
+          <el-menu
             default-active="Recommended"
             :collapse="isCollapse"
             collapse-transition
-            >
+          >
             <template v-for="item in itemsData" :key="item.en_name">
               <el-menu-item
                 :index="item.en_name"
                 @click="handclick(item.en_name)"
               >
+                <el-icon><tools /></el-icon>
                 <span>{{ item.name }}</span>
               </el-menu-item>
             </template>
@@ -62,10 +86,26 @@
     </div>
     <div
       v-if="scrollTop >= 300"
-      class="toTop fixed right-10 bottom-36 md:right-26"
+      class="
+        toTop
+        fixed
+        right-10
+        bottom-36
+        md:right-26
+        p-2
+        rounded
+        animate__animated animate__rollIn
+        bg-gradient-to-r
+        from-green-400
+        to-blue-500
+        hover:from-pink-500 hover:to-yellow-500
+      "
       @click="backTop()"
     >
-      回到顶部
+      <div class="flex items-center justify-center w-16">
+        回到顶部
+        <el-icon class="flex-1 text-base ml-2"><arrow-up-bold /></el-icon>
+      </div>
     </div>
     <!-- 移动端展示 -->
     <div
@@ -89,10 +129,11 @@
 import { ref, onMounted } from "vue";
 import MenuItem from "@/components/MenuItem/MenuItem.vue";
 import itemsData from "@/assets/data.json";
+import { Tools, Fold, ArrowUpBold } from "@element-plus/icons-vue";
 console.log(itemsData);
 const scrollTop = ref(0);
 const selectName = ref(null);
-const isCollapse = ref(false)
+const isCollapse = ref(false);
 // 监听滚动条高度
 onMounted(() => {
   console.log("mounted");
@@ -110,19 +151,15 @@ const backTop = () => {
   document.documentElement.scrollTop = document.body.scrollTop = 0;
 };
 const changeName = (name) => {
-  // console.log(name)
   selectName.value = name;
 };
 const handclick = (value) => {
   console.log(value);
   selectName.value = value;
 };
-const handleCollapse = () =>{
-    isCollapse.value = !isCollapse.value
-}
+const handleCollapse = () => {
+  isCollapse.value = !isCollapse.value;
+};
 </script>
 <style lang='scss' scoped>
-    // .collapse{
-    //    width: 64; 
-    // }
 </style>
