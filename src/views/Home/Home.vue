@@ -16,6 +16,7 @@
         to-blue-500
         transition-all
         duration-1000
+        z-10
       "
       :class="isCollapse === true ? 'md:left-16' : 'md:left-48'"
     >
@@ -103,7 +104,7 @@
     </div>
     <!-- 主区域内容块 -->
     <div class="main pt-11 md:pt-24 md:pl-4 shadow-inner">
-      <div class="content bg-gray-100">
+      <div class="content shadow-inner px-4">
         <MenuItem :data="itemsData" :name="selectName"></MenuItem>
       </div>
     </div>
