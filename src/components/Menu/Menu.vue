@@ -8,7 +8,7 @@
     </ul>
 </template>
 <script setup>
-import { toRefs } from 'vue'
+import { toRefs } from "@vue/reactivity"
     const props = defineProps({
         data: {
             type: Array,
