@@ -4,7 +4,7 @@
             <template v-if="item.children">
                 <!-- 有子节点 -->
                 <template v-for="value in item.children" :key="value.en_name">
-                    <div :id="value.en_name" class="mb-8">
+                    <div :id="value.en_name" class="mb-8 cursor-pointer">
                         <div
                             v-if="value.web"
                             class="text-lg font-bold text-indigo-700 flex items-center h-10"
@@ -40,7 +40,7 @@
                     </div>
                 </template>
             </template>
-            <div v-else :id="item.en_name" class="mb-8">
+            <div v-else :id="item.en_name" class="mb-8 cursor-pointer">
                 <!-- 无子节点 -->
                 <div
                     v-if="item.web"
@@ -105,7 +105,7 @@ watch(
 <style>
   /* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-  width: 2px !important;
+  width: 0px !important;
   height: 1px !important;
 }
 </style>

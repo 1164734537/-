@@ -8,9 +8,11 @@
       class="nav hidden fixed top-0 left-0 md:block md:left-48 w-full h-20 bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-1000 z-10"
       :class="isCollapse === true ? 'md:left-16' : 'md:left-48'"
     >
-      <el-icon @click="handleCollapse" class="ml-4">
-        <fold />
-      </el-icon>
+      <div class="h-full w-8 flex items-center justify-center">
+        <el-icon @click="handleCollapse" class="ml-4 cursor-pointer">
+          <fold />
+        </el-icon>
+      </div>
     </div>
     <!-- menu区域 -->
     <div
@@ -74,7 +76,7 @@
     <!-- 回到顶部 -->
     <div
       v-show="scrollTop >= 300"
-      class="toTop fixed right-10 bottom-36 md:right-26 p-2 rounded animate__animated bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+      class="toTop fixed right-10 bottom-36 md:right-26 p-2 rounded animate__animated bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 cursor-pointer"
       :class="scrollTop >= 300 ? 'animate__rollIn' : ''"
       @click="backTop()"
     >
@@ -91,10 +93,28 @@
     >
       <div class="h-full px-4 flex justify-between items-center">
         <div>路由</div>
-        <div @click="handledown">展开项</div>
+        <div @click="handledown" class="cursor-pointer">
+          <el-icon>
+            <expand />
+          </el-icon>
+        </div>
       </div>
-      <div v-show="isShow" class="w-full h-40 bg-zinc-500 animate__animated animate__backInUp">
-
+      <div
+        v-show="isShow"
+        class="w-full bg-zinc-500 animate__animated animate__rotateInUpLeft animate__faster"
+      >
+        <ul>
+          <template v-for="item in itemsData" :key="item.en_name">
+            <template v-if="item.web">
+              <li @click="handclick(item.en_name, 'moblie_nav')">{{ item.name }}</li>
+            </template>
+            <template v-else-if="item.children">
+              <template v-for="value in item.children" :key="value.en_name">
+                <li @click="handclick(value.en_name, 'moblie_nav')">{{ value.name }}</li>
+              </template>
+            </template>
+          </template>
+        </ul>
       </div>
     </div>
   </div>
@@ -104,7 +124,7 @@ import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
 import MenuItem from "@/components/MenuItem/MenuItem.vue";
 import itemsData from "@/assets/data.json";
-import { Tools, Fold, ArrowUpBold } from "@element-plus/icons-vue";
+import { Tools, Fold, ArrowUpBold, Expand } from "@element-plus/icons-vue";
 
 console.log(itemsData);
 const scrollTop = ref(0);
@@ -130,15 +150,17 @@ const backTop = () => {
 const changeName = (name) => {
   selectName.value = name;
 };
-const handclick = (value) => {
+const handclick = (value, nav) => {
   console.log(value);
   selectName.value = value;
+  if (nav === 'moblie_nav') {
+    isShow.value = false
+  }
 };
 const handleCollapse = () => {
   isCollapse.value = !isCollapse.value;
 };
 const handledown = () => {
-  console.log('显示下拉框')
   isShow.value = !isShow.value;
 }
 </script>
