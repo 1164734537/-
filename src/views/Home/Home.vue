@@ -145,6 +145,8 @@ import { onMounted } from "@vue/runtime-core";
 import MenuItem from "@/components/MenuItem/MenuItem.vue";
 import itemsData from "@/assets/data.json";
 import { Tools, Fold, ArrowUpBold, Expand } from "@element-plus/icons-vue";
+import config from '@/config/index.js'
+console.log(config)
 
 console.log(itemsData);
 const scrollTop = ref(0);
