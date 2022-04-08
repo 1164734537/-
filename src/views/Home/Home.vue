@@ -19,7 +19,7 @@
       class="menu hidden fixed top-0 left-0 md:block h-screen bg-white transition-all duration-1000 overflow-hidden"
       :class="isCollapse === true ? 'w-16' : 'w-48'"
     >
-      <el-row class="mt-4 w-full">
+      <el-row class="w-full">
         <el-col>
           <div class="flex flex-col items-center justify-center">
             <img
@@ -41,7 +41,7 @@
               "
             >陈叔叔导航</h1>
           </div>
-          <el-menu default-active="Recommended" :collapse="isCollapse" collapse-transition>
+          <el-menu class="h-96 overflow-y-auto overscroll-contain mt-4" default-active="Recommended" :collapse="isCollapse" collapse-transition unique-opened="true">
             <template v-for="item in itemsData" :key="item.en_name">
               <el-sub-menu v-if="item.children" :index="item.en_name">
                 <template #title>
