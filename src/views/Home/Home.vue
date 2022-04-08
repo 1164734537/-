@@ -1,42 +1,20 @@
 <template>
-  <div class="wrap transition-all duration-1000" :class="isCollapse === true ? 'md:pl-16' : 'md:pl-48'" >
-      <!-- PC端nav -->
+  <div
+    class="wrap transition-all duration-1000 overflow-hidden"
+    :class="isCollapse === true ? 'md:pl-16' : 'md:pl-48'"
+  >
+    <!-- PC端nav -->
     <div
-      class="
-        nav
-        hidden
-        fixed
-        top-0
-        left-0
-        md:block md:left-48
-        w-full
-        h-20
-        bg-gradient-to-r
-        from-green-400
-        to-blue-500
-        transition-all
-        duration-1000
-        z-10
-      "
+      class="nav hidden fixed top-0 left-0 md:block md:left-48 w-full h-20 bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-1000 z-10"
       :class="isCollapse === true ? 'md:left-16' : 'md:left-48'"
     >
-      <el-icon @click="handleCollapse" class="ml-4"><fold /></el-icon>
+      <el-icon @click="handleCollapse" class="ml-4">
+        <fold />
+      </el-icon>
     </div>
     <!-- menu区域 -->
     <div
-      class="
-        menu
-        hidden
-        fixed
-        top-0
-        left-0
-        md:block
-        h-screen
-        bg-white
-        transition-all
-        duration-1000
-        overflow-hidden
-      "
+      class="menu hidden fixed top-0 left-0 md:block h-screen bg-white transition-all duration-1000 overflow-hidden"
       :class="isCollapse === true ? 'w-16' : 'w-48'"
     >
       <el-row class="mt-4 w-full">
@@ -45,7 +23,7 @@
             <img
               class="w-28 rounded-sm"
               src="@/assets/images/logo.jpg"
-              alt=""
+              alt
               :class="
                 isCollapse === true
                   ? 'animate__animated animate__jello'
@@ -59,44 +37,29 @@
                   ? 'animate__animated animate__fadeOutLeftBig'
                   : 'animate__animated animate__rubberBand'
               "
-            >
-              陈叔叔导航
-            </h1>
+            >陈叔叔导航</h1>
           </div>
-          <el-menu
-            default-active="Recommended"
-            :collapse="isCollapse"
-            collapse-transition
-          >
+          <el-menu default-active="Recommended" :collapse="isCollapse" collapse-transition>
             <template v-for="item in itemsData" :key="item.en_name">
-              <el-sub-menu
-                v-if="item.children"
-              >
+              <el-sub-menu v-if="item.children" :index="item.en_name">
                 <template #title>
-                  <el-icon><tools /></el-icon>
+                  <el-icon>
+                    <tools />
+                  </el-icon>
                   <span>{{ item.name }}</span>
                 </template>
-                <template
-                  v-for="item in item.children"
-                  :key="item.en_name"
-                >
-                  <el-menu-item
-                    :index="item.en_name"
-                    @click="handclick(item.en_name)"
-                  >
+                <template v-for="item in item.children" :key="item.en_name">
+                  <el-menu-item :index="item.en_name" @click="handclick(item.en_name)">
                     <span>{{ item.name }}</span>
                   </el-menu-item>
                 </template>
               </el-sub-menu>
-              <el-menu-item
-                v-else
-                :index="item.en_name"
-                @click="handclick(item.en_name)"
-                >
-                <el-icon><tools /></el-icon>
+              <el-menu-item v-else :index="item.en_name" @click="handclick(item.en_name)">
+                <el-icon>
+                  <tools />
+                </el-icon>
                 <span>{{ item.name }}</span>
               </el-menu-item>
-
             </template>
           </el-menu>
         </el-col>
@@ -104,49 +67,35 @@
     </div>
     <!-- 主区域内容块 -->
     <div class="main pt-11 md:pt-24 md:pl-4 shadow-inner">
-      <div class="content shadow-inner px-4">
+      <div class="content shadow-inner md:px-4">
         <MenuItem :data="itemsData" :name="selectName"></MenuItem>
       </div>
     </div>
     <!-- 回到顶部 -->
     <div
-      class="
-        toTop
-        fixed
-        right-10
-        bottom-36
-        md:right-26
-        p-2
-        rounded
-        animate__animated
-        bg-gradient-to-r
-        from-green-400
-        to-blue-500
-        hover:from-pink-500 hover:to-yellow-500
-      "
-      :class="scrollTop >= 300? 'animate__rollIn':'animate__fadeOutRight'"
+      v-show="scrollTop >= 300"
+      class="toTop fixed right-10 bottom-36 md:right-26 p-2 rounded animate__animated bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+      :class="scrollTop >= 300 ? 'animate__rollIn' : ''"
       @click="backTop()"
     >
       <div class="flex items-center justify-center w-16 text-white text-opacity-80">
         回到顶部
-        <el-icon class="flex-1 text-base ml-2"><arrow-up-bold /></el-icon>
+        <el-icon class="flex-1 text-base ml-2">
+          <arrow-up-bold />
+        </el-icon>
       </div>
     </div>
     <!-- 移动端展示 -->
     <div
-      class="
-        moblie_nav
-        block
-        md:hidden
-        fixed
-        top-0
-        left-0
-        h-10
-        w-full
-        bg-yellow-200
-      "
+      class="moblie_nav block md:hidden fixed top-0 left-0 h-10 w-full bg-gradient-to-r from-green-400 to-blue-500 z-10"
     >
-      移动端nav
+      <div class="h-full px-4 flex justify-between items-center">
+        <div>路由</div>
+        <div @click="handledown">展开项</div>
+      </div>
+      <div v-show="isShow" class="w-full h-40 bg-zinc-500 animate__animated animate__backInUp">
+
+      </div>
     </div>
   </div>
 </template>
@@ -161,6 +110,7 @@ console.log(itemsData);
 const scrollTop = ref(0);
 const selectName = ref(null);
 const isCollapse = ref(false);
+const isShow = ref(false)
 // 监听滚动条高度
 onMounted(() => {
   console.log("mounted");
@@ -187,14 +137,13 @@ const handclick = (value) => {
 const handleCollapse = () => {
   isCollapse.value = !isCollapse.value;
 };
+const handledown = () => {
+  console.log('显示下拉框')
+  isShow.value = !isShow.value;
+}
 </script>
-<style lang='scss'>
-  .menu :deep(.el-menu) {
-    border-right: none;
-  }
-  /* 设置滚动条的样式 */
-::-webkit-scrollbar {
-  width: 2px !important;
-  height: 1px !important;
+<style lang='scss' scoped>
+.menu :deep(.el-menu) {
+  border-right: solid 1px transparent;
 }
 </style>

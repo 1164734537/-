@@ -1,68 +1,79 @@
 <template>
     <div class="w-full h-full pt-8">
         <template v-for="item in data" :key="item.name">
-            <!-- 有子节点 -->
             <template v-if="item.children">
+                <!-- 有子节点 -->
                 <template v-for="value in item.children" :key="value.en_name">
-                    <div :id="value.en_name">
+                    <div :id="value.en_name" class="mb-8">
                         <div
                             v-if="value.web"
-                            class="text-lg font-bold text-indigo-700 flex items-center"
+                            class="text-lg font-bold text-indigo-700 flex items-center h-10"
                         >
                             <el-icon>
                                 <price-tag />
                             </el-icon>
                             <h1>{{ value.name }}</h1>
                         </div>
-                        <template v-for="item in value.web" :key="item.en_name">
-                            <div class="">
-                                <div>{{ item.desc }}</div>
-                                <div>{{ item.logo }}</div>
-                                <div>{{ item.title }}</div>
-                                <div>{{ item.url }}</div>
-                            </div>
-                        </template>
+                        <div class="shadow rounded-md">
+                            <ul class="flex justify-start flex-wrap md:py-4 md:pl-4">
+                                <template v-for="item in value.web" :key="item.en_name">
+                                    <li class="lg:w-1/4 md:w-1/2 w-full h-20">
+                                        <a
+                                            :href="item.url"
+                                            class="block ml-8 md:ml-0 md:w-full h-full flex md:justify-center items-center cursor-pointer hover:bg-gray-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow transition-all"
+                                            target="_blank"
+                                        >
+                                            <div class="logo w-8 h-8 flex-shrink-0">
+                                                <img class="w-full" :src="item.logo" alt />
+                                            </div>
+                                            <div class="ml-2 flex-shrink">
+                                                <p class="text-base leading-4">{{ item.title }}</p>
+                                                <p
+                                                    class="w-60 md:w-48 h-8 leading-8 text-sm font-thin break-all truncate"
+                                                >{{ item.desc }}</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
                     </div>
                 </template>
             </template>
-            <!-- 无子节点 -->
             <div v-else :id="item.en_name" class="mb-8">
-                <div v-if="item.web" class="text-lg font-bold text-indigo-700 flex items-center h-10">
+                <!-- 无子节点 -->
+                <div
+                    v-if="item.web"
+                    class="text-lg font-bold text-indigo-700 flex items-center h-10"
+                >
                     <el-icon>
                         <price-tag />
                     </el-icon>
                     <h1>{{ item.name }}</h1>
                 </div>
                 <div class="shadow rounded-md">
-                    <ul class="flex">
+                    <ul class="flex justify-start flex-wrap md:py-4 md:pl-4">
                         <template v-for="value in item.web" :key="value.url">
-                                <!-- <div>{{ value.desc }}</div>
-                                <div>{{ value.logo }}</div>
-                                <div>{{ value.title }}</div>
-                                <div>{{ value.url }}</div> -->
-                            <!-- <div>
-                                <div class="logo w-10 h-10">
-                                    <img class="w-full" :src="value.logo" alt="">
-                                </div>
-                                <div class="">
-
-                                </div>
-                            </div> -->
-                            <li class=" w-1/4">
-                                <a :href="value.url" class="block flex justify-center items-center" target="_blank">
-                                    <div class="logo w-10 h-10">
-                                        <img class="w-full" :src="value.logo" alt="">
+                            <li class="lg:w-1/4 md:w-1/2 w-full h-20">
+                                <a
+                                    :href="value.url"
+                                    class="block ml-8 md:ml-0 md:w-full h-full flex md:justify-center items-center cursor-pointer hover:bg-gray-50 hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow transition-all"
+                                    target="_blank"
+                                >
+                                    <div class="logo w-8 h-8 flex-shrink-0">
+                                        <img class="w-full" :src="value.logo" alt />
                                     </div>
-                                    <div class="ml-2 w-full overflow-clip">
-                                        <p class="text-base">{{ value.title }}</p>
-                                        <p class="text-sm font-thin break-all">{{ value.desc }}</p>
+                                    <div class="ml-2 flex-shrink">
+                                        <p class="text-base leading-4">{{ value.title }}</p>
+                                        <p
+                                            class="w-60 md:w-48 h-8 leading-8 text-sm font-thin break-all truncate"
+                                        >{{ value.desc }}</p>
                                     </div>
                                 </a>
                             </li>
                         </template>
                     </ul>
                 </div>
-
             </div>
         </template>
     </div>
@@ -91,5 +102,10 @@ watch(
     }
 )
 </script>
-<style scoped>
+<style>
+  /* 设置滚动条的样式 */
+::-webkit-scrollbar {
+  width: 2px !important;
+  height: 1px !important;
+}
 </style>

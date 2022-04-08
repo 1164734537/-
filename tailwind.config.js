@@ -8,8 +8,11 @@ module.exports = {
         main: {
           nav:'#303133'
         }
-      }
+      },
     },
+    minWidth: {
+      '1/4': '25%'
+    }
   },
   plugins: [],
 }
