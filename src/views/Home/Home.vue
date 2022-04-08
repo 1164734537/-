@@ -93,7 +93,7 @@
     >
       <div class="h-full px-4 flex justify-between items-center">
         <div>路由</div>
-        <div @click="handledown" class="cursor-pointer">
+        <div @click="handledown" class="cursor-pointer text-slate-200">
           <el-icon>
             <expand />
           </el-icon>
@@ -101,16 +101,36 @@
       </div>
       <div
         v-show="isShow"
-        class="w-full bg-zinc-500 animate__animated animate__rotateInUpLeft animate__faster"
+        class="w-full h-96 animate__animated animate__slideInUp animate__faster bg-gradient-to-r from-green-400 to-blue-500 border-t border-teal-200/25 overscroll-contain overflow-y-auto"
       >
-        <ul>
+        <ul class="w-full px-4 cursor-pointer">
           <template v-for="item in itemsData" :key="item.en_name">
             <template v-if="item.web">
-              <li @click="handclick(item.en_name, 'moblie_nav')">{{ item.name }}</li>
+              <li
+                class="w-full border-b border-teal-200/25"
+                @click="handclick(item.en_name, 'moblie_nav')"
+              >
+                <div class="flex items-center w-full h-10 text-slate-200 ">
+                  <el-icon>
+                    <tools />
+                  </el-icon>
+                  <h1 class="ml-4">{{ item.name }}</h1>
+                </div>
+              </li>
             </template>
             <template v-else-if="item.children">
               <template v-for="value in item.children" :key="value.en_name">
-                <li @click="handclick(value.en_name, 'moblie_nav')">{{ value.name }}</li>
+                <li
+                  class="w-full border-b border-teal-200/25"
+                  @click="handclick(value.en_name, 'moblie_nav')"
+                >
+                  <div class="flex items-center w-full h-10 text-slate-200">
+                    <el-icon>
+                      <tools />
+                    </el-icon>
+                    <h1 class="ml-4">{{ value.name }}</h1>
+                  </div>
+                </li>
               </template>
             </template>
           </template>
