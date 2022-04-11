@@ -81,31 +81,27 @@
 <script setup>
 import { PriceTag } from "@element-plus/icons-vue";
 import { nextTick, toRefs, watch } from "@vue/runtime-core";
+import { useStore } from 'vuex'
+const store = useStore()
 const props = defineProps({
     data: {
         type: Object,
         required: true
-    },
-    name: {
-        type: Object,
-        default: null
     }
 })
-const { data, name } = toRefs(props)
-watch(
-    () => props.name,
-    (newVal, oldVal) => {
-        nextTick(() => {
-            let scroll = document.getElementById(newVal).offsetTop - 80
-            document.documentElement.scrollTop = document.body.scrollTop = scroll;
-        })
-    }
-)
+const { data } = toRefs(props)
+watch(() => store.state.menuName, (newVal, oldVal) => {
+    nextTick(() => {
+        let scroll = document.getElementById(newVal).offsetTop - 80
+        document.documentElement.scrollTop = document.body.scrollTop = scroll;
+    })
+})
+
 </script>
 <style>
-  /* 设置滚动条的样式 */
+/* 设置滚动条的样式 */
 ::-webkit-scrollbar {
-  width: 0px !important;
-  height: 1px !important;
+    width: 0px !important;
+    height: 1px !important;
 }
 </style>

@@ -16,61 +16,15 @@
     </div>
     <!-- menu区域 -->
     <div
-      class="menu hidden fixed top-0 left-0 md:block h-screen bg-white transition-all duration-1000 overflow-hidden"
+      class="menu hidden fixed top-0 left-0 md:block h-screen bg-white transition-all duration-1000 overflow-hidden z-10"
       :class="isCollapse === true ? 'w-16' : 'w-48'"
     >
-      <el-row class="w-full">
-        <el-col>
-          <div class="flex flex-col items-center justify-center">
-            <img
-              class="w-28 rounded-sm"
-              src="@/assets/images/logo.jpg"
-              alt
-              :class="
-                isCollapse === true
-                  ? 'animate__animated animate__jello'
-                  : 'animate__animated animate__wobble'
-              "
-            />
-            <h1
-              class="font-bold text-xl"
-              :class="
-                isCollapse === true
-                  ? 'animate__animated animate__fadeOutLeftBig'
-                  : 'animate__animated animate__rubberBand'
-              "
-            >陈叔叔导航</h1>
-          </div>
-          <el-menu class="h-96 overflow-y-auto overscroll-contain mt-4" default-active="Recommended" :collapse="isCollapse" collapse-transition unique-opened="true">
-            <template v-for="item in itemsData" :key="item.en_name">
-              <el-sub-menu v-if="item.children" :index="item.en_name">
-                <template #title>
-                  <el-icon>
-                    <tools />
-                  </el-icon>
-                  <span>{{ item.name }}</span>
-                </template>
-                <template v-for="item in item.children" :key="item.en_name">
-                  <el-menu-item :index="item.en_name" @click="handclick(item.en_name)">
-                    <span>{{ item.name }}</span>
-                  </el-menu-item>
-                </template>
-              </el-sub-menu>
-              <el-menu-item v-else :index="item.en_name" @click="handclick(item.en_name)">
-                <el-icon>
-                  <tools />
-                </el-icon>
-                <span>{{ item.name }}</span>
-              </el-menu-item>
-            </template>
-          </el-menu>
-        </el-col>
-      </el-row>
+      <Menu :isCollapse="isCollapse" :data="itemsData"></Menu>
     </div>
     <!-- 主区域内容块 -->
     <div class="main pt-11 md:pt-24 md:pl-4 shadow-inner">
-      <div class="content shadow-inner md:px-4">
-        <MenuItem :data="itemsData" :name="selectName"></MenuItem>
+      <div class="content md:px-4">
+        <MenuItem :data="itemsData"></MenuItem>
       </div>
     </div>
     <!-- 回到顶部 -->
@@ -103,38 +57,7 @@
         v-show="isShow"
         class="w-full h-96 animate__animated animate__slideInUp animate__faster bg-gradient-to-r from-green-400 to-blue-500 border-t border-teal-200/25 overscroll-contain overflow-y-auto"
       >
-        <ul class="w-full px-4 cursor-pointer">
-          <template v-for="item in itemsData" :key="item.en_name">
-            <template v-if="item.web">
-              <li
-                class="w-full border-b border-teal-200/25"
-                @click="handclick(item.en_name, 'moblie_nav')"
-              >
-                <div class="flex items-center w-full h-10 text-slate-200 ">
-                  <el-icon>
-                    <tools />
-                  </el-icon>
-                  <h1 class="ml-4">{{ item.name }}</h1>
-                </div>
-              </li>
-            </template>
-            <template v-else-if="item.children">
-              <template v-for="value in item.children" :key="value.en_name">
-                <li
-                  class="w-full border-b border-teal-200/25"
-                  @click="handclick(value.en_name, 'moblie_nav')"
-                >
-                  <div class="flex items-center w-full h-10 text-slate-200">
-                    <el-icon>
-                      <tools />
-                    </el-icon>
-                    <h1 class="ml-4">{{ value.name }}</h1>
-                  </div>
-                </li>
-              </template>
-            </template>
-          </template>
-        </ul>
+        <MenuMoblie :data="itemsData"></MenuMoblie>
       </div>
     </div>
   </div>
@@ -142,8 +65,9 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-// import MenuItem from "@/components/MenuItem/MenuItem.vue";
 import { Tools, Fold, ArrowUpBold, Expand } from "@element-plus/icons-vue";
+import Menu from "@/components/Menu/Menu.vue";
+import MenuMoblie from "../../components/Menu/MenuMoblie.vue";
 import api from "@/api"
 const scrollTop = ref(0);
 const selectName = ref(null);
@@ -155,15 +79,14 @@ onMounted(() => {
   console.log("mounted");
   // 滚动条, 注册监听事件
   document.addEventListener("scroll", isScrollTop, true);
-  // api.getMenuList()
+  // 初始化菜单数据
   getMenuList()
 });
 
 // 获取菜单列表信息
 const getMenuList = async () => {
   const list = await api.getMenuList()
-  // console.log(list)
-  if(list.length > 0){
+  if (list.length > 0) {
     itemsData.value = list
   }
 }
@@ -178,19 +101,11 @@ const isScrollTop = () => {
 const backTop = () => {
   document.documentElement.scrollTop = document.body.scrollTop = 0;
 };
-const changeName = (name) => {
-  selectName.value = name;
-};
-const handclick = (value, nav) => {
-  console.log(value);
-  selectName.value = value;
-  if (nav === 'moblie_nav') {
-    isShow.value = false
-  }
-};
+// 是否折叠menu
 const handleCollapse = () => {
   isCollapse.value = !isCollapse.value;
 };
+// 移动端下是否展示菜单
 const handledown = () => {
   isShow.value = !isShow.value;
 }

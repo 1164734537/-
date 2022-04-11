@@ -13,7 +13,8 @@
     "axios": "^0.26.1",
     "element-plus": "^2.1.7",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vicons/ionicons5": "^0.12.0",
