@@ -4,6 +4,7 @@ import { join } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import ElementPlus from 'unplugin-element-plus/vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(),
@@ -13,6 +14,7 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
+    ElementPlus()
   ],
   resolve: {
     alias: {
@@ -20,6 +22,12 @@ export default defineConfig({
     }
   },
   server: {
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    prot:8080,
+    proxy:{
+      "/api":{
+        target:"http://localhost:3000"
+      }
+    }
   }
 })

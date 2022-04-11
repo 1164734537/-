@@ -142,23 +142,32 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import { onMounted } from "@vue/runtime-core";
-import MenuItem from "@/components/MenuItem/MenuItem.vue";
-import itemsData from "@/assets/data.json";
+// import MenuItem from "@/components/MenuItem/MenuItem.vue";
 import { Tools, Fold, ArrowUpBold, Expand } from "@element-plus/icons-vue";
-import config from '@/config/index.js'
-console.log(config)
-
-console.log(itemsData);
+import api from "@/api"
 const scrollTop = ref(0);
 const selectName = ref(null);
 const isCollapse = ref(false);
 const isShow = ref(false)
+const itemsData = ref([])
 // 监听滚动条高度
 onMounted(() => {
   console.log("mounted");
   // 滚动条, 注册监听事件
   document.addEventListener("scroll", isScrollTop, true);
+  // api.getMenuList()
+  getMenuList()
 });
+
+// 获取菜单列表信息
+const getMenuList = async () => {
+  const list = await api.getMenuList()
+  // console.log(list)
+  if(list.length > 0){
+    itemsData.value = list
+  }
+}
+
 // 实时滚动条高度
 const isScrollTop = () => {
   let scroll = document.documentElement.scrollTop || document.body.scrollTop;
