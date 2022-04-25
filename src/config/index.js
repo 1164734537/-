@@ -8,11 +8,11 @@ const EnvConfig = {
         mockApi:'http://127.0.0.1:4523/mock/838930/api/'
     },
     test:{
-        baseApi:'/api',
+        baseApi:'//hangbb.cn/api',
         mockApi:'http://127.0.0.1:4523/mock/838930/api/'
     },
     prod:{
-        baseApi:'//hangbb.com/api',
+        baseApi:'//hangbb.cn/api',
         mockApi:'http://127.0.0.1:4523/mock/838930/api/'
     }
 }

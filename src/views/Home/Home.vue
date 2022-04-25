@@ -55,7 +55,7 @@
       </div>
       <div
         v-show="isShow"
-        class="w-full h-96 animate__animated animate__slideInUp animate__faster bg-gradient-to-r from-green-400 to-blue-500 border-t border-teal-200/25 overscroll-contain overflow-y-auto"
+        class="w-full animate__animated animate__slideInUp animate__faster bg-gradient-to-r from-green-400 to-blue-500 border-t border-teal-200/25 overscroll-contain overflow-y-auto"
       >
         <MenuMoblie :data="itemsData"></MenuMoblie>
       </div>

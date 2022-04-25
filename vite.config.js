@@ -23,10 +23,10 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    prot:8080,
+    port: 8080,
     proxy:{
       "/api":{
-        target:"http://localhost:3000"
+        target:"http://hangbb.cn/"
       }
     }
   }
