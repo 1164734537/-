@@ -72,6 +72,25 @@
             }
         ]
     },
+    {   
+        "name": "跨境电商", 
+        "en_name": "E-commerce",
+        "icon":"linecons-star",
+        "web":[
+            {
+                "url": "https://www.wearesellers.com/",
+                "logo": "assets/images/logos/wubuyan.jpg",
+                "title": "知无不言跨境电商社区",
+                "desc": "知无不言社区，是跨境电商人的科学世界。"
+            },
+            {
+                "url": "https://www.amz123.com/",
+                "logo": "assets/images/logos/yamaxun.png",
+                "title": "亚马逊卖家",
+                "desc": "AMZ123亚马逊导航是一家致力于服务中国跨境电商从业者的综合平台"
+            }
+        ]
+    },
     {
         "name": "社区资讯",
         "en_name": "Information",
