@@ -21,13 +21,16 @@ export default defineConfig({
       '@': join(__dirname,"src")
     }
   },
+  base: process.env.NODE_ENV === 'prod' ? '/': '',
   server: {
     host: '0.0.0.0',
     port: 8080,
     proxy:{
       "/api":{
         target:"http://hangbb.cn/"
+        // target:"http://localhost:3000"
       }
     }
-  }
+  },
+
 })
