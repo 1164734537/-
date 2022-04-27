@@ -27,7 +27,7 @@ export default defineConfig({
     port: 8080,
     proxy:{
       "/api":{
-        target:"http://hangbb.cn/"
+        target:"https://hangbb.cn/"
         // target:"http://localhost:3000"
       }
     }
